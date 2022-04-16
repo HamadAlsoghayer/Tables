@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\UserController;
 use App\Http\Controllers\TableController;
 use App\Http\Controllers\ReservationController;
 use Illuminate\Http\Request;
@@ -39,12 +40,17 @@ return response()->json([
 ]);
 
 });
-
+Route::prefix('employees')->group(function(){
+    Route::post('/', [UserController::class,'store'])->middleware('auth:sanctum');
+    Route::delete('/{user:employee_number}', [UserController::class,'destroy'])->middleware('auth:sanctum');
+    Route::get('/', [UserController::class,'index'])->middleware('auth:sanctum');
+});
 Route::prefix('tables')->group(function(){
     Route::post('/', [TableController::class,'store'])->middleware('auth:sanctum');
     Route::delete('/{table:number}', [TableController::class,'destroy'])->middleware('auth:sanctum');
     Route::get('/', [TableController::class,'index']);
 });
-Route::prefix('reservations')->group(function(){
+Route::middleware('auth:sanctum')->prefix('reservations')->group(function(){
     Route::get('/', [ReservationController::class,'index']);
+    Route::post('/', [ReservationController::class,'store']);
 });

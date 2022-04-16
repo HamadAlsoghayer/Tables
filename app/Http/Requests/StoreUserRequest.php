@@ -13,7 +13,7 @@ class StoreUserRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return $this->user()->hasRole('admin');
     }
 
     /**
@@ -23,8 +23,7 @@ class StoreUserRequest extends FormRequest
      */
     public function rules()
     {
-        return [
-            //
+        return ['name'=>['required','regex:/[a-zA-Z0-9\s]+/'], 'employee_number'=>'required|unique:users|digits:4','password'=>'required|alpha_dash|min:6|confirmed'
         ];
     }
 }

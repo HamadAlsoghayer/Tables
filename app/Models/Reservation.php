@@ -9,7 +9,7 @@ class Reservation extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['starting_time','ending_time'];
+    protected $fillable = ['customer_name','table_number','starting_time','ending_time'];
 
     public function table(){
         $this->belongsTo(Table::class);

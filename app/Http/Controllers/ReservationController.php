@@ -8,6 +8,10 @@ use App\Models\Reservation;
 
 class ReservationController extends Controller
 {
+    public function __construct()
+    {
+        $this->authorizeResource(Reservation::class, 'reservation');
+    }
     /**
      * Display a listing of the resource.
      *

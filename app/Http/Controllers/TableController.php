@@ -8,6 +8,10 @@ use App\Models\Table;
 
 class TableController extends Controller
 {
+    public function __construct()
+    {
+        $this->authorizeResource(Table::class, 'table');
+    }
     /**
      * Display a listing of the resource.
      *

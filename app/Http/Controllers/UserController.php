@@ -8,6 +8,10 @@ use App\Models\User;
 
 class UserController extends Controller
 {
+    public function __construct()
+    {
+        $this->authorizeResource(User::class, 'user');
+    }
     /**
      * Display a listing of the resource.
      *
@@ -15,7 +19,10 @@ class UserController extends Controller
      */
     public function index()
     {
-        //
+        if(auth()->user()->hasRole('admin')){
+            $users = User::all();
+            return response()->json($users);
+        }//
     }
 
     /**
@@ -26,7 +33,10 @@ class UserController extends Controller
      */
     public function store(StoreUserRequest $request)
     {
-        //
+        $user = User::create($request->toArray());
+        $user->assignRole('employee');
+
+        response()->json($user);//
     }
 
     /**
@@ -60,6 +70,11 @@ class UserController extends Controller
      */
     public function destroy(User $user)
     {
-        //
+        if($user->employee_number!=auth()->user()->employee_number){
+        $user->delete();
+        return response()->json('deleted');//
+    }
+    return response()->json('not deleted');//
+
     }
 }

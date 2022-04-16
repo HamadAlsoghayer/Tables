@@ -13,7 +13,7 @@ class StoreReservationRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -23,8 +23,7 @@ class StoreReservationRequest extends FormRequest
      */
     public function rules()
     {
-        return [
-            //
+        return ['customer_name'=>['regex:/[a-zA-Z0-9\s]+/'],'table_number'=>'required|exists:tables,number','starting_time'=>'date|after:now','ending_time'=>'date|after:starting_time',
         ];
     }
 }
