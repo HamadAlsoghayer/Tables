@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\TableController;
+use App\Http\Controllers\ReservationController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
@@ -36,4 +38,13 @@ return response()->json([
     'token' => auth()->user()->createToken('API Token')->plainTextToken
 ]);
 
+});
+
+Route::prefix('tables')->group(function(){
+    Route::post('/', [TableController::class,'store'])->middleware('auth:sanctum');
+    Route::delete('/{table:number}', [TableController::class,'destroy'])->middleware('auth:sanctum');
+    Route::get('/', [TableController::class,'index']);
+});
+Route::prefix('reservations')->group(function(){
+    Route::get('/', [ReservationController::class,'index']);
 });

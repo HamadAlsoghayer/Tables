@@ -10,4 +10,8 @@ class Reservation extends Model
     use HasFactory;
 
     protected $fillable = ['starting_time','ending_time'];
+
+    public function table(){
+        $this->belongsTo(Table::class);
+    }
 }

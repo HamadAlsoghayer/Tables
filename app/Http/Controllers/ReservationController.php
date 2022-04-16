@@ -15,7 +15,8 @@ class ReservationController extends Controller
      */
     public function index()
     {
-        //
+        $reservation = Reservation::all();
+        return response()->json($reservation);//
     }
 
     /**

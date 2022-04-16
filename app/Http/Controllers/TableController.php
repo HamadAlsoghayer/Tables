@@ -26,7 +26,8 @@ class TableController extends Controller
      */
     public function store(StoreTableRequest $request)
     {
-        //
+        Table::create($request->toArray());
+        return response()->json('Table Created Successfully');//
     }
 
     /**
@@ -40,17 +41,17 @@ class TableController extends Controller
         //
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \App\Http\Requests\UpdateTableRequest  $request
-     * @param  \App\Models\Table  $table
-     * @return \Illuminate\Http\Response
-     */
-    public function update(UpdateTableRequest $request, Table $table)
-    {
-        //
-    }
+    // /**
+    //  * Update the specified resource in storage.
+    //  *
+    //  * @param  \App\Http\Requests\UpdateTableRequest  $request
+    //  * @param  \App\Models\Table  $table
+    //  * @return \Illuminate\Http\Response
+    //  */
+    // public function update(UpdateTableRequest $request, Table $table)
+    // {
+    //     //
+    // }
 
     /**
      * Remove the specified resource from storage.
@@ -60,6 +61,11 @@ class TableController extends Controller
      */
     public function destroy(Table $table)
     {
-        //
+        if($table->reservations->empty()){
+            $table->delete();
+            return response()->json('deleted');
+        }//
+        return response()->json('not deleted');
+
     }
 }

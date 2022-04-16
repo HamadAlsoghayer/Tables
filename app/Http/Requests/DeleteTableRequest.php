@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class UpdateTableRequest extends FormRequest
+class DeleteTableRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -13,7 +13,7 @@ class UpdateTableRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return $this->user()->hasRole('admin');
     }
 
     /**
@@ -23,8 +23,6 @@ class UpdateTableRequest extends FormRequest
      */
     public function rules()
     {
-        return [
-            //
-        ];
+        return ['number'=>'required|numeric|exists:tables'];
     }
 }

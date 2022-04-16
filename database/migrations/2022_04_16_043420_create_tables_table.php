@@ -14,7 +14,8 @@ return new class extends Migration
     public function up()
     {
         Schema::create('tables', function (Blueprint $table) {
-            $table->id('number');
+            $table->id();
+            $table->integer('number')->unique();
             $table->integer('seats')->range(1,12);
             $table->timestamps();
         });
