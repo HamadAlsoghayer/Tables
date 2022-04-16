@@ -13,12 +13,11 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('users', function (Blueprint $table) {
+        Schema::create('reservations', function (Blueprint $table) {
             $table->id();
-            $table->string('employee_number')->unique();
-            $table->string('name');
-            $table->string('password');
-            $table->rememberToken();
+            $table->foreignId('tables.number');
+            $table->dateTime('starting_time');
+            $table->dateTime('ending_time');
             $table->timestamps();
         });
     }
@@ -30,6 +29,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('users');
+        Schema::dropIfExists('reservations');
     }
 };
