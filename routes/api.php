@@ -53,6 +53,7 @@ Route::middleware('auth:sanctum')->prefix('tables')->group(function(){
 });
 Route::middleware('auth:sanctum')->prefix('reservations')->group(function(){
     Route::get('/', [ReservationController::class,'index']);
+    Route::get('/today', [ReservationController::class,'todays']);
     Route::post('/', [ReservationController::class,'store']);
     Route::delete('/{reservation}', [ReservationController::class,'destroy']);
 

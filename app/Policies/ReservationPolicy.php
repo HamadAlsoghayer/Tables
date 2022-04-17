@@ -65,7 +65,7 @@ class ReservationPolicy
      */
     public function delete(User $user, Reservation $reservation)
     {
-        return true;//
+        return $user->hasRole('admin');
     }
 
     /**
