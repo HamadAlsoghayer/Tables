@@ -18,12 +18,12 @@ prerequisites:
 * composer installed
 * docker installed
 
-1- clone repo
-2- run command composer install
-3- Copy the contents of .env.example to .env
-4- run command ./vendor/bin/sail run php artisan key:generate
-5- run command ./vendor/bin/sail up
-6- run command ./vendor/bin/sail artisan migrate --seed
+- clone repo
+- run command composer install
+- Copy the contents of .env.example to .env
+- run command ./vendor/bin/sail run php artisan key:generate
+- run command ./vendor/bin/sail up
+- run command ./vendor/bin/sail artisan migrate --seed
 
 application should be up and running 
 
