@@ -1,5 +1,5 @@
 
-## About TABLES
+## TABLES (Laravel based Project)
 
 Tables is a REST api application created for part of a screening test.
 
