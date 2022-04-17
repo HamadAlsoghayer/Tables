@@ -21,13 +21,19 @@ class ReservationController extends Controller
      */
     public function index()
     {
-        $reservation = Reservation::with('table_number');
+        $reservation = Reservation::query();
         if(request()->tables){        
-            return response()->json(Reservation::whereHas('table',function (Builder $query) {
+            $reservation->whereHas('table',function (Builder $query) {
                 $query->whereIn('number', request()->tables);
-            })->paginate());//
+            });//
         }
-        return response()->json(Reservation::paginate());//
+        if(request()->from_date){
+            $reservation->where('starting_time','>',request()->from_date);
+        }
+        if(request()->to_date){
+            $reservation->where('ending_time','<=',request()->to_date);
+        }
+        return response()->json($reservation->paginate());//
     }
 
     public function todays()
@@ -83,7 +89,8 @@ class ReservationController extends Controller
             return response()->json('Cannot Delete Reservations that have already passed');
         }
         else 
-        return response()->json($reservation->delete());
+        $reservation->delete();
+        return response()->json('deleted');
 
     }
 }

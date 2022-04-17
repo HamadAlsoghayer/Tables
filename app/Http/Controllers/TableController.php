@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoretableRequest;
 use App\Http\Requests\UpdatetableRequest;
+use App\Http\Requests\AvailabilityRequest;
 use App\Models\table;
 use Carbon\Carbon;
 use Illuminate\Http\JsonResponse;
@@ -48,19 +49,23 @@ class TableController extends Controller
         //
     }
 
-    public function availability()
+    public function availability(AvailabilityRequest $request)
     {
-        //$now = now(); manual for testing purposes
+        
         $now = now();
-        $start_time = now()->setTimeFromTimeString('12:00 PM');
-        $close_time = now()->setTimeFromTimeString('11:59 PM');
+        if($request->test_time){ // THIS IS ONLY FOR TESTING CONVENIENVE AND WOULD BE REMOVED OTHERWISE
+            $now = Carbon::create($request->test_time);
+        }
+        $start_time = clone($now); $start_time->setTimeFromTimeString('12:00 PM');
+        $close_time = clone($now); $close_time->setTimeFromTimeString('11:59 PM');
         $response = collect();
 
-        if($now->betweenIncluded($start_time,$close_time)){
-            foreach(Table::all() as $table){
-                $availableSlots = $table->availability(clone($now));
+        if($now->isBefore($close_time)){
+            $acceptedSize = Table::where('seats','>=',$request->size)->orderBy('seats')->limit(1)->firstOrFail()->seats;
+            foreach(Table::where('seats',$acceptedSize)->get() as $table){
+                $availableSlots = $table->availability(clone($now>$start_time?$now:$start_time));
                 if($availableSlots){
-                $response->add(['table number'=>$table->number,'availability' => $availableSlots]);}
+                $response->add(['table number'=>$table->number,'seats'=>$table->seats,'availability' => $availableSlots]);}
 
             }
 
