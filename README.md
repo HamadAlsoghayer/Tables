@@ -7,17 +7,19 @@ Laravel is accessible, powerful, and provides tools required for large, robust a
 
 ## POSTMAN COLLECTION
 
-This workspace contains all the endpoints and the env variables
-`Tables.postman_collection.json` the exported postman collection
-`Local.postman_environment.json` the exported postman environment
-https://www.postman.com/cryosat-observer-68000874/workspace/tables/overview
+`Tables.postman_collection.json` the exported postman collection.
 
+`Local.postman_environment.json` the exported postman environment.
+
+https://www.postman.com/cryosat-observer-68000874/workspace/tables/overview
+This workspace contains all the endpoints and the env variables.
 ## Installation
 
 prerequisites:
 * composer installed
 * docker installed
 
+steps:
 - clone repo
 - run command composer install
 - Copy the contents of .env.example to .env
