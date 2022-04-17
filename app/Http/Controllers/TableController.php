@@ -51,9 +51,9 @@ class TableController extends Controller
     public function availability()
     {
         //$now = now(); manual for testing purposes
-        $now = Carbon::create('2022-05-07')->setTimeFromTimeString('02:00PM');
-        $start_time = Carbon::create('2022-05-07')->setTimeFromTimeString('12:00 PM');
-        $close_time = Carbon::create('2022-05-07')->setTimeFromTimeString('11:58 PM');
+        $now = now();
+        $start_time = now()->setTimeFromTimeString('12:00 PM');
+        $close_time = now()->setTimeFromTimeString('11:59 PM');
         $response = collect();
 
         if($now->betweenIncluded($start_time,$close_time)){
@@ -64,9 +64,8 @@ class TableController extends Controller
 
             }
 
-            return response()->json($response);// 
-        } // including the 11:58 minute before closing
-
+            return response()->json($response);
+        } 
         return response()->json('time is outside of work hours for today');//
     }
     /**
