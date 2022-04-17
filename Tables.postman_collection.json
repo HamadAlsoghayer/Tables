@@ -10,6 +10,18 @@
 			"item": [
 				{
 					"name": "login",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const{token} = pm.response.json();",
+									"pm.environment.set(\"TOKEN\", token);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"auth": {
 							"type": "noauth"
@@ -66,7 +78,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "5|kTYAp4XuRXDnxPH7pePbRY2oFCHzdRGzBKTe8Dcz",
+									"value": "{{TOKEN}}",
 									"type": "string"
 								}
 							]
@@ -108,7 +120,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "6|SsNEdFmKgQdZiW4ivAuEvdfp2wocZ7aojH3Iqwl3",
+									"value": "{{TOKEN}}",
 									"type": "string"
 								}
 							]
@@ -155,7 +167,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "2|Ykw23Xaa6PiCvBHrUv1ocloluCm8GniUyI0bpALX",
+									"value": "{{TOKEN}}",
 									"type": "string"
 								}
 							]
@@ -197,7 +209,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "2|Ykw23Xaa6PiCvBHrUv1ocloluCm8GniUyI0bpALX",
+									"value": "{{TOKEN}}",
 									"type": "string"
 								}
 							]
@@ -245,7 +257,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "2|Ykw23Xaa6PiCvBHrUv1ocloluCm8GniUyI0bpALX",
+									"value": "{{TOKEN}}",
 									"type": "string"
 								}
 							]
@@ -297,7 +309,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "2|Ykw23Xaa6PiCvBHrUv1ocloluCm8GniUyI0bpALX",
+									"value": "{{TOKEN}}",
 									"type": "string"
 								}
 							]
@@ -354,7 +366,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "2|fbJgBtoIheaGgDyRGIL4XRBGQmF0x5lDCbdV6QuS",
+									"value": "{{TOKEN}}",
 									"type": "string"
 								}
 							]
@@ -418,7 +430,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "2|Ykw23Xaa6PiCvBHrUv1ocloluCm8GniUyI0bpALX",
+									"value": "{{TOKEN}}",
 									"type": "string"
 								}
 							]
@@ -460,7 +472,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "2|Ykw23Xaa6PiCvBHrUv1ocloluCm8GniUyI0bpALX",
+									"value": "{{TOKEN}}",
 									"type": "string"
 								}
 							]
@@ -512,7 +524,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "2|Ykw23Xaa6PiCvBHrUv1ocloluCm8GniUyI0bpALX",
+									"value": "{{TOKEN}}",
 									"type": "string"
 								}
 							]
@@ -572,7 +584,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "2|Ykw23Xaa6PiCvBHrUv1ocloluCm8GniUyI0bpALX",
+									"value": "{{TOKEN}}",
 									"type": "string"
 								}
 							]
@@ -620,7 +632,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "2|Ykw23Xaa6PiCvBHrUv1ocloluCm8GniUyI0bpALX",
+									"value": "{{TOKEN}}",
 									"type": "string"
 								}
 							]
@@ -662,7 +674,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "2|Ykw23Xaa6PiCvBHrUv1ocloluCm8GniUyI0bpALX",
+									"value": "{{TOKEN}}",
 									"type": "string"
 								}
 							]
@@ -779,48 +791,6 @@
 			"name": "Employees",
 			"item": [
 				{
-					"name": "Get all Copy",
-					"protocolProfileBehavior": {
-						"disabledSystemHeaders": {}
-					},
-					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "3|5zLELKnLgtmj7HCTdSLhGibfSksOEeWKWBVMjX4c",
-									"type": "string"
-								}
-							]
-						},
-						"method": "GET",
-						"header": [
-							{
-								"key": "Accept",
-								"value": "application/json",
-								"type": "text"
-							},
-							{
-								"key": "Origin",
-								"value": "localhost",
-								"type": "text"
-							}
-						],
-						"url": {
-							"raw": "{{BASE_URL}}api/employees/",
-							"host": [
-								"{{BASE_URL}}api"
-							],
-							"path": [
-								"employees",
-								""
-							]
-						}
-					},
-					"response": []
-				},
-				{
 					"name": "create Copy",
 					"protocolProfileBehavior": {
 						"disabledSystemHeaders": {}
@@ -898,7 +868,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "10|haJir5hUIiGYWPwi6ur5v4e6ASAy1DYXMv6G76aA",
+									"value": "{{TOKEN}}",
 									"type": "string"
 								}
 							]
