@@ -40,17 +40,20 @@ return response()->json([
 ]);
 
 });
-Route::prefix('employees')->group(function(){
-    Route::post('/', [UserController::class,'store'])->middleware('auth:sanctum');
-    Route::delete('/{user:employee_number}', [UserController::class,'destroy'])->middleware('auth:sanctum');
-    Route::get('/', [UserController::class,'index'])->middleware('auth:sanctum');
+Route::middleware('auth:sanctum')->prefix('employees')->group(function(){
+    Route::post('/', [UserController::class,'store']);
+    Route::delete('/{user:employee_number}', [UserController::class,'destroy']);
+    Route::get('/', [UserController::class,'index']);
 });
-Route::prefix('tables')->group(function(){
-    Route::post('/', [TableController::class,'store'])->middleware('auth:sanctum');
-    Route::delete('/{table:number}', [TableController::class,'destroy'])->middleware('auth:sanctum');
+Route::middleware('auth:sanctum')->prefix('tables')->group(function(){    
+    Route::get('/timeslots', [TableController::class,'availability']);
+    Route::post('/', [TableController::class,'store']);
+    Route::delete('/{table}', [TableController::class,'destroy']);
     Route::get('/', [TableController::class,'index']);
 });
 Route::middleware('auth:sanctum')->prefix('reservations')->group(function(){
     Route::get('/', [ReservationController::class,'index']);
     Route::post('/', [ReservationController::class,'store']);
+    Route::delete('/{reservation}', [ReservationController::class,'destroy']);
+
 });

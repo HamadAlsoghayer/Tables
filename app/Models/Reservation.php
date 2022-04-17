@@ -9,9 +9,13 @@ class Reservation extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['customer_name','table_number','starting_time','ending_time'];
+    protected $fillable = ['customer_name','table_id','starting_time','ending_time'];
 
     public function table(){
-        $this->belongsTo(Table::class);
+       return $this->belongsTo(Table::class);
     }
+    public function getTableNumberAttribute(){
+       return $this->table()->first()->number;
+    }
+    
 }

@@ -3,7 +3,8 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
-class StoreTableRequest extends FormRequest
+
+class UpdatetableRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -12,7 +13,7 @@ class StoreTableRequest extends FormRequest
      */
     public function authorize()
     {
-        return true;
+        return false;
     }
 
     /**
@@ -22,8 +23,8 @@ class StoreTableRequest extends FormRequest
      */
     public function rules()
     {
-        return ['number'=>'numeric|unique:tables','seats'=>'numeric|between:1,12'];
+        return [
+            //
+        ];
     }
-
-
 }

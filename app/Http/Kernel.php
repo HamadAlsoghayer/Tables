@@ -6,10 +6,10 @@ use Illuminate\Foundation\Http\Kernel as HttpKernel;
 
 class Kernel extends HttpKernel
 {
-    protected $middlewarePriority = [
+    /* protected $middlewarePriority = [
         \App\Http\Middleware\Authenticate::class,
         \Illuminate\Routing\Middleware\SubstituteBindings::class,
-    ];
+    ]; */
     /**
      * The application's global HTTP middleware stack.
      *

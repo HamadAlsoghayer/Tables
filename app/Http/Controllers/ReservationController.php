@@ -19,9 +19,10 @@ class ReservationController extends Controller
      */
     public function index()
     {
-        $reservation = Reservation::all();
+        $reservation = Reservation::all()->append('table_number');
         return response()->json($reservation);//
     }
+
 
     /**
      * Store a newly created resource in storage.
@@ -31,7 +32,7 @@ class ReservationController extends Controller
      */
     public function store(StoreReservationRequest $request)
     {
-        //
+        return response()->json(Reservation::create($request->toArray()));//
     }
 
     /**
