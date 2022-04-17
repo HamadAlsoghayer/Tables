@@ -19,29 +19,33 @@ This workspace contains all the endpoints and the env variables
 
 https://www.postman.com/cryosat-observer-68000874/workspace/tables/overview
 
-## Laravel Sponsors
+## Installation
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+prerequisites:
+* composer installed
+* docker installed
 
-### Premium Partners
+1- clone repo
+2- run command composer install
+3- Copy the contents of .env.example to .env
+4- run command ./vendor/bin/sail run php artisan key:generate
+5- run command ./vendor/bin/sail up
+6- run command ./vendor/bin/sail artisan migrate --seed
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[OP.GG](https://op.gg)**
-- **[WebReinvent](https://webreinvent.com/?utm_source=laravel&utm_medium=github&utm_campaign=patreon-sponsors)**
-- **[Lendio](https://lendio.com)**
+application should be up and running 
 
-## Contributing
+after this initial set up, anytime you need to start the app 'docker-compose up' command  will be able to start everything.
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+
+
+
+
+
+## Algorithm for choosing required table
+
+ requests takes group size
+ query all tables with seats equal to size or greater -> order by ascending -> fetch the first result (it will match the smallest required seats that exists) -> $seats
+ query all tables with seats = $seats and fetch available time slots.
 
 ## Code of Conduct
 
