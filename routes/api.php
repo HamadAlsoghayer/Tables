@@ -32,7 +32,7 @@ Route::post('/login', function (Request $request) {
 ]);
 
 if (!Auth::attempt($attr)) {
-    return $this->error('Credentials not match', 401);
+    return response()->json('Credentials not match', 401);
 }
 auth()->user()->tokens()->delete();
 return response()->json([
@@ -40,6 +40,14 @@ return response()->json([
 ]);
 
 });
+Route::get('/logout', function (Request $request) 
+{
+$request->user()->tokens()->delete();
+
+return response()->json('logged out');
+}
+)->middleware(['auth:sanctum']); 
+
 Route::middleware('auth:sanctum')->prefix('employees')->group(function(){
     Route::post('/', [UserController::class,'store']);
     Route::delete('/{user:employee_number}', [UserController::class,'destroy']);
