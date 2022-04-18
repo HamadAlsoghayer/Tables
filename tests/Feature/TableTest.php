@@ -141,21 +141,6 @@ class TableTest extends TestCase
                 $response->assertForbidden();
     }
 
-
-    public function test_guest_cannot_access_delete_table_endpoint()
-    {
-        Role::create(['name' => 'admin']);
-        Role::create(['name' => 'employee']);
-
-        $table= Table::factory()->create();
-
-            $this->assertGuest();
-    
-                $response = $this->deleteJson('/api/tables/'.$table->number);
-        
-                $response->assertUnauthorized();
-    }
-
     public function test_admin_user_cannot_delete_table_with_reservation()
     {
         
@@ -181,6 +166,30 @@ class TableTest extends TestCase
 
     
                 $response = $this->getJson('/api/tables');
+                $response->assertUnauthorized();
+    }
+
+
+
+    public function test_guest_cannot_create_tables()
+    {
+        $this->assertGuest();
+
+    
+                $response = $this->postJson('/api/tables',['number'=>10,'seats'=>3]);
+                $response->assertUnauthorized();
+    }
+
+
+    public function test_guest_cannot_access_delete_table_endpoint()
+    {
+
+        $table= Table::factory()->create();
+
+            $this->assertGuest();
+    
+                $response = $this->deleteJson('/api/tables/'.$table->number);
+        
                 $response->assertUnauthorized();
     }
 }
