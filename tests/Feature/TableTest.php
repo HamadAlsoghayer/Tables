@@ -130,10 +130,7 @@ class TableTest extends TestCase
         
         Role::create(['name' => 'admin']);
         $table= Table::factory()->has(Reservation::factory()->count(1))->create();
-        $reservation = Reservation::factory()->make(['table_id'=>$table->id]);
         $table->refresh();
-        dump($reservation->table);
-
             $user= Sanctum::actingAs(
                 User::factory()->create()->assignRole('admin'),
                 ['*']);
