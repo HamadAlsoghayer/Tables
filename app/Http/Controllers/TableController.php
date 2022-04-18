@@ -7,8 +7,6 @@ use App\Http\Requests\UpdatetableRequest;
 use App\Http\Requests\AvailabilityRequest;
 use App\Models\table;
 use Carbon\Carbon;
-use Illuminate\Http\JsonResponse;
-use Illuminate\Support\Arr;
 
 class TableController extends Controller
 {
