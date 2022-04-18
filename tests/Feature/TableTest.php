@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use App\Models\Table;
 use App\Models\User;
 use Laravel\Sanctum\Sanctum;
 use Tests\TestCase;
@@ -13,32 +14,28 @@ class TableTest extends TestCase
      *
      * @return void
      */
-    public function test_user_can_retrieve_their_info()
+    public function test_user_can_retrieve_tables()
     {
+        Table::factory(3)->create();
 
         $this->withoutExceptionHandling();
             $user= Sanctum::actingAs(
                 User::factory()->create(),
                 ['*']);
     
-                $response = $this->get('/api/user');
+                $response = $this->get('/api/tables');
         
-                $this->assertSame($user->name,$response->json('name'));
+                $response->assertJsonCount(3,'Tables');
                 $response->assertStatus(200);
     }
 
-    public function test_user_cannot_retrieve_others_info()
+    public function test_guest_cannot_retrieve_tables_info()
     {
+        Table::factory(3)->create();
+        $this->assertGuest();
 
-        $this->withoutExceptionHandling();
-            $user= Sanctum::actingAs(
-                User::factory()->create(),
-                ['*']);
-            $user2 = User::factory()->create();
     
-                $response = $this->get('/api/user');
-        
-                $this->assertNotSame($user2->name,$response->json('name'));
-                $response->assertStatus(200);
+                $response = $this->getJson('/api/tables');
+                $response->assertUnauthorized();
     }
 }

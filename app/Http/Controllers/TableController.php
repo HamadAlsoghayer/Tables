@@ -23,7 +23,7 @@ class TableController extends Controller
      */
     public function index()
     {
-        return response()->json(Table::all());//
+        return response()->json(['Tables' =>Table::all()]);//
     }
 
     /**
