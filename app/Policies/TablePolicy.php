@@ -41,7 +41,7 @@ class TablePolicy
      */
     public function create(User $user)
     {
-        return true;//
+        return $user->hasRole('admin');//
     }
 
     /**
@@ -65,7 +65,7 @@ class TablePolicy
      */
     public function delete(User $user, Table $table)
     {
-        return true;//
+        return $user->hasRole('admin');//
 
     }
 

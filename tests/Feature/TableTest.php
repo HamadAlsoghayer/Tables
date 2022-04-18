@@ -49,6 +49,71 @@ class TableTest extends TestCase
                 $response->assertForbidden();
     }
 
+    public function test_admin_user_can_create_tables()
+    {
+        Role::create(['name' => 'admin']);
+
+            $user= Sanctum::actingAs(
+                User::factory()->create()->assignRole('admin'),
+                ['*']);
+    
+                $response = $this->postJson('/api/tables',['number'=>10,'seats'=>3]);
+                $response->assertSuccessful();
+    }
+
+
+    public function test_non_admin_user_cannot_create_tables()
+    {
+        Role::create(['name' => 'admin']);
+        Role::create(['name' => 'employee']);
+
+            $user= Sanctum::actingAs(
+                User::factory()->create()->assignRole('employee'),
+                ['*']);
+    
+                $response = $this->postJson('/api/tables',['number'=>10,'seats'=>3]);
+                $response->assertForbidden();
+    }
+
+    public function test_admin_user_cannot_create_tables_with_seats_over_12()
+    {
+        Role::create(['name' => 'admin']);
+
+            $user= Sanctum::actingAs(
+                User::factory()->create()->assignRole('admin'),
+                ['*']);
+    
+                $response = $this->postJson('/api/tables',['number'=>10,'seats'=>13]);
+                $response->assertUnprocessable();
+    }
+
+    public function test_admin_user_cannot_create_tables_with_seats_less_than_1()
+    {
+        Role::create(['name' => 'admin']);
+
+            $user= Sanctum::actingAs(
+                User::factory()->create()->assignRole('admin'),
+                ['*']);
+    
+                $response = $this->postJson('/api/tables',['number'=>10,'seats'=>0]);
+                $response->assertUnprocessable();
+    }
+
+    public function test_admin_user_cannot_create_tables_with_non_numeric_number()
+    {
+        Role::create(['name' => 'admin']);
+
+            $user= Sanctum::actingAs(
+                User::factory()->create()->assignRole('admin'),
+                ['*']);
+    
+                $response = $this->postJson('/api/tables',['number'=>'asdf','seats'=>12]);
+                $response->assertUnprocessable();
+    }
+
+
+    
+
     public function test_guest_cannot_retrieve_tables_info()
     {
         Table::factory(3)->create();
