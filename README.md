@@ -31,6 +31,10 @@ application should be up and running
 
 after this initial set up, anytime you need to start the app `'docker-compose up'` command  will be able to start everything.
 
+## `'./vendor/bin/sail test'`
+This commands runs all unit and feature tests that have been implemented
+
+
 
 
 

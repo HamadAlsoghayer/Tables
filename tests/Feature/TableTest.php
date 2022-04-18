@@ -35,7 +35,7 @@ class TableTest extends TestCase
                 User::factory()->create(),
                 ['*']);
             $user2 = User::factory()->create();
-    g
+    
                 $response = $this->get('/api/user');
         
                 $this->assertNotSame($user2->name,$response->json('name'));
