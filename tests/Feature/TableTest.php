@@ -125,6 +125,37 @@ class TableTest extends TestCase
                 $response->assertStatus(200);
     }
 
+    public function test_non_admin_user_cannot_delete_table_using_number()
+    {
+        Role::create(['name' => 'admin']);
+        Role::create(['name' => 'employee']);
+
+        $table= Table::factory()->create();
+
+            $user= Sanctum::actingAs(
+                User::factory()->create()->assignRole('employee'),
+                ['*']);
+    
+                $response = $this->deleteJson('/api/tables/'.$table->number);
+        
+                $response->assertForbidden();
+    }
+
+
+    public function test_guest_cannot_access_delete_table_endpoint()
+    {
+        Role::create(['name' => 'admin']);
+        Role::create(['name' => 'employee']);
+
+        $table= Table::factory()->create();
+
+            $this->assertGuest();
+    
+                $response = $this->deleteJson('/api/tables/'.$table->number);
+        
+                $response->assertUnauthorized();
+    }
+
     public function test_admin_user_cannot_delete_table_with_reservation()
     {
         
