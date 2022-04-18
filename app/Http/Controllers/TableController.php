@@ -91,10 +91,10 @@ class TableController extends Controller
      */
     public function destroy(table $table)
     {
-        if($table->reservations->empty()){
+        if(!$table->reservations->first()){
             $table->delete();
             return response()->json('deleted');
         }//
-        return response()->json('not deleted');//
+        return response()->json('not deleted',403);//
     }
 }

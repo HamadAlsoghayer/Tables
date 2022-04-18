@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use App\Models\Reservation;
 use App\Models\Table;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -24,7 +25,7 @@ class TableTest extends TestCase
         Role::create(['name' => 'admin']);
         Table::factory(3)->create();
 
-        $this->withoutExceptionHandling();
+        
             $user= Sanctum::actingAs(
                 User::factory()->create()->assignRole('admin'),
                 ['*']);
@@ -109,6 +110,37 @@ class TableTest extends TestCase
     
                 $response = $this->postJson('/api/tables',['number'=>'asdf','seats'=>12]);
                 $response->assertUnprocessable();
+    }
+    public function test_admin_user_can_delete_table_using_number()
+    {
+        Role::create(['name' => 'admin']);
+        $table= Table::factory()->create();
+
+            $user= Sanctum::actingAs(
+                User::factory()->create()->assignRole('admin'),
+                ['*']);
+    
+                $response = $this->deleteJson('/api/tables/'.$table->number);
+        
+                $response->assertStatus(200);
+    }
+
+    public function test_admin_user_cannot_delete_table_with_reservation()
+    {
+        
+        Role::create(['name' => 'admin']);
+        $table= Table::factory()->has(Reservation::factory()->count(1))->create();
+        $reservation = Reservation::factory()->make(['table_id'=>$table->id]);
+        $table->refresh();
+        dump($reservation->table);
+
+            $user= Sanctum::actingAs(
+                User::factory()->create()->assignRole('admin'),
+                ['*']);
+    
+                $response = $this->deleteJson('/api/tables/'.$table->number);
+        
+                $response->assertForbidden();
     }
 
 

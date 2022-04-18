@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Table;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -17,7 +18,10 @@ class ReservationFactory extends Factory
     public function definition()
     {
         return [
-            //
+            'customer_name'=>$this->faker->name(),
+            'starting_time'=>now(),
+            'ending_time'=>now()->addHour(),
+            'table_id' =>Table::factory()->create()->id,
         ];
     }
 }
