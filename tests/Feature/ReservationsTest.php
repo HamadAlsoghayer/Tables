@@ -83,4 +83,26 @@ class ReservationsTest extends TestCase
                 $response->assertJsonCount(3,'data');
                 $response->assertStatus(200);
     }
+
+    public function test_guest_user_cannot_access_reservations()
+    {
+
+        Table::factory()->has(Reservation::factory(1,['starting_time'=>now(),'ending_time'=>now()->addHour()])->count(3))->create();
+        $this->assertGuest();
+                $response = $this->getJson('/api/reservations/today');
+        
+                $response->assertUnauthorized();
+    }
+
+    public function test_guest_user_cannot_access_todays_reservations()
+    {
+        $this->assertGuest();
+        Table::factory()->has(Reservation::factory(1,['starting_time'=>now(),'ending_time'=>now()->addHour()])->count(3))->create();
+
+ 
+    
+                $response = $this->getJson('/api/reservations/today');
+        
+                $response->assertUnauthorized();
+    }
 }
