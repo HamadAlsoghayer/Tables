@@ -86,7 +86,7 @@ class ReservationController extends Controller
     public function destroy(Reservation $reservation)
     {
         if($reservation->starting_time<now() && $reservation->ending_time<now()){
-            return response()->json('Cannot Delete Reservations that have already passed');
+            return response()->json('Cannot Delete Reservations that have already passed',422);
         }
         else 
         $reservation->delete();

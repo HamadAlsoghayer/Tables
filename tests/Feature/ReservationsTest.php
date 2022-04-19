@@ -71,7 +71,7 @@ $this->travelTo(today()->setTimeFromTimeString('12:00PM'));
                 $response->assertStatus(200);
     }
 
-    public function test_employee_user_can_todays_reservations()
+    public function test_employee_user_can_get_todays_reservations()
     {
         $this->travelTo(today()->setTimeFromTimeString('12:00PM'));
 
@@ -197,5 +197,36 @@ $this->travelTo(today()->setTimeFromTimeString('12:00PM'));
                 $response = $this->getJson('/api/reservations/today');
         
                 $response->assertUnauthorized();
+    }
+
+    public function test_admin_user_can_delete_reservations()
+    {
+        $this->travelTo(today()->setTimeFromTimeString('12:00PM'));
+
+        Role::create(['name' => 'admin']);
+        $table = Table::factory()->create();
+        $res = Reservation::factory()->create(['starting_time'=>Carbon::today()->setTimeFromTimeString('02:00PM'),'ending_time'=>Carbon::today()->setTimeFromTimeString('02:00PM')->addHour(),'table_id'=>$table->id]);        
+        
+            $user= Sanctum::actingAs(
+                User::factory()->create()->assignRole('admin'),
+                ['*']);
+    
+                $response = $this->deleteJson('/api/reservations/'.$res->id);
+                        $response->assertStatus(200);
+    }
+    public function test_admin_user_cannot_delete_past_reservations()
+    {
+        $this->travelTo(today()->setTimeFromTimeString('6:00PM'));
+
+        Role::create(['name' => 'admin']);
+        $table = Table::factory()->create();
+        $res = Reservation::factory()->create(['starting_time'=>Carbon::today()->setTimeFromTimeString('02:00PM'),'ending_time'=>Carbon::today()->setTimeFromTimeString('02:00PM')->addHour(),'table_id'=>$table->id]);        
+        
+            $user= Sanctum::actingAs(
+                User::factory()->create()->assignRole('admin'),
+                ['*']);
+    
+                $response = $this->deleteJson('/api/reservations/'.$res->id);
+                        $response->assertUnprocessable();
     }
 }
