@@ -93,8 +93,8 @@ class TableController extends Controller
     {
         if(!$table->reservations->first()){
             $table->delete();
-            return response()->json('deleted');
+            return response()->json('Table Deleted');
         }//
-        return response()->json('not deleted',403);//
+        return response()->json('Cannot Delete Tables that have or had reservations',403);//
     }
 }
