@@ -1,9 +1,9 @@
 
 ## TABLES (Laravel based Project)
 
-Tables is a REST api application created for part of a screening test.
+Tables is a REST api application created for part of a screening test. 
+Tables provides features that help restaurants manage their reservations without conflicts.
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
 
 ## POSTMAN COLLECTION
 
@@ -16,6 +16,7 @@ This workspace contains all the endpoints and the env variables.
 ## Installation
 
 prerequisites:
+* PHP 7.2.5 or higher installed
 * composer installed
 * docker installed
 
@@ -27,23 +28,30 @@ steps:
 5. run command ./vendor/bin/sail up
 6. run command ./vendor/bin/sail artisan migrate --seed
 
-application should be up and running 
 
-after this initial set up, anytime you need to start the app `'docker-compose up'` command  will be able to start everything.
+## Laravel Sail
+Sail is a wrapper for docker-compose that provides the appropriate configurations and makes buiding the app easy.
 
-## `'./vendor/bin/sail test'`
-This commands runs all unit and feature tests that have been implemented
+application should be up and running.
 
+after this initial set up, anytime you need to start the app `'docker-compose up'` command  will be able to start everything(try using `sail up` instead).
 
+## Automated Testing 
+### `'./vendor/bin/sail test'`
+This commands runs all unit and feature tests that have been implemented. 
 
+#### NOTE: I implmented a second pgsql container dedicated for automated testing to avoid wiping development db.
+check .env.testing for testing configs, container name pgsql_test.
+## Authentication
+User authentication is done through issuing and verifying api tokens. Laravel Sanctum was used for handling tokens, it is closely similar to JWTs.
 
-
-
+## Caching
+Used redis container for caching.
 
 ## Algorithm for choosing required table
 
- 1. requests takes group `size` 
- 2. query all `tables` with `seats` equal to size or greater -> order by ascending -> fetch the first result (it will match the  smallest required seats that exists) -> `$seats`
+ 1. requests takes group `size`.
+ 2. query all `tables` with `seats` equal to size or greater -> order by ascending -> fetch the first result (it will match the  smallest required seats that exists) -> `$seats`.
  3. query all `tables` with `seats` = `$seats` and fetch available time slots.
 
 
