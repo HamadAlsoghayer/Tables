@@ -6,6 +6,7 @@ use Illuminate\Contracts\Validation\Rule;
 use App\Models\Table;
 use Carbon\CarbonPeriod;
 use Carbon\Carbon;
+use Spatie\Period\Period;
 
 class Available implements Rule
 {
@@ -29,18 +30,19 @@ class Available implements Rule
      */
     public function passes($attribute, $endingtime)
     {
-    $endingtime= Carbon::create($endingtime);
+    $endingtime= Carbon::make($endingtime);
         $table = Table::where('number',$this->table_number)->first();
-        $todaysReservations = $table->reservations()->whereDate('starting_time', $endingtime->toDate())->get();
+        $todaysReservations = $table->reservations()->whereDate('starting_time', $endingtime)->get();
         foreach($todaysReservations as $booked){
             if($this->starting_time>$booked->ending_time || $endingtime<$booked->starting_time)
             continue;
-            $period = CarbonPeriod::create($this->starting_time, $endingtime);
-            $reservedPeriod = CarbonPeriod::create($booked->starting_time, $booked->endingtime);
-            if($period->contains($reservedPeriod)){
+            $period = Period::make(Carbon::make($this->starting_time), Carbon::make($endingtime));
+            $reservedPeriod = Period::make(Carbon::make($booked->starting_time), Carbon::make($booked->ending_time));
+            if($period->overlapsWith($reservedPeriod)){
               return false;
-            }
+            } 
         }
+
         return true;
         //
     }

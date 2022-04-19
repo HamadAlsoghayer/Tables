@@ -26,7 +26,7 @@ class SameDay implements Rule
      */
     public function passes($attribute, $endingtime)
     {
-    $endingtime= Carbon::create($endingtime);
+        $endingtime= Carbon::create($endingtime);
         return $endingtime->isSameDay($this->starting_time);
     }
 
