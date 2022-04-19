@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreUserRequest;
 use App\Http\Requests\UpdateUserRequest;
 use App\Models\User;
+use GrahamCampbell\ResultType\Success;
 
 class UserController extends Controller
 {
@@ -36,7 +37,7 @@ class UserController extends Controller
         $user = User::create($request->toArray());
         $user->assignRole('employee');
 
-        response()->json($user);//
+        return response()->json(['Message'=>'Employee Created', 'Employee'=>$user]);//
     }
 
     /**
@@ -74,7 +75,7 @@ class UserController extends Controller
         $user->delete();
         return response()->json('deleted');//
     }
-    return response()->json('not deleted');//
+    return response()->json('cannot delete self');//
 
     }
 }
