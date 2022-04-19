@@ -11,7 +11,7 @@ Tables provides features that help restaurants manage their reservations without
 
 `Local.postman_environment.json` the exported postman environment.
 
-https://www.postman.com/cryosat-observer-68000874/workspace/tables/overview
+check https://www.postman.com/cryosat-observer-68000874/workspace/tables/overview for latest postman workspace.
 This workspace contains all the endpoints and the env variables.
 ## Installation
 
