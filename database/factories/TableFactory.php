@@ -20,7 +20,7 @@ class TableFactory extends Factory
     public function definition()
     {
         return [
-            'number' => strval($this->faker->randomNumber()),
+            'number' => strval($this->faker->unique()->randomNumber()),
             'seats'=> $this->faker->numberBetween(1,12)];
     }
 }

@@ -106,6 +106,24 @@ $this->travelTo(today()->setTimeFromTimeString('12:00PM'));
                 $response->assertStatus(200);
     }
 
+
+    public function test_admin_cannot_make_overlapping_reservations()
+    {
+        $this->travelTo(today()->setTimeFromTimeString('12:00PM'));
+        Role::create(['name' => 'admin']);
+        $table = Table::factory()->create();
+        $start_time = Carbon::today()->setTimeFromTimeString('05:00PM')->addMinute();
+        $end_time = clone ($start_time); $end_time->addHour();
+        Reservation::factory()->create(['starting_time'=>$start_time,'ending_time'=>$end_time,'table_id'=>$table->id]);
+        
+            $user= Sanctum::actingAs(
+                User::factory()->create()->assignRole('admin'),
+                ['*']);
+    
+                $response = $this->postJson('/api/reservations/',['customer_name'=>'cuz tomer','starting_time'=>$start_time->toDateTimeString(),'ending_time'=>$end_time->toDateTimeString(),'table_number'=>$table->number]);
+                $response->assertUnprocessable();
+    }
+
     public function test_admin_user_cannot_make_reservations_starts_in_the_past()
     {
              $this->travelTo(today()->setTimeFromTimeString('12:00PM'));
