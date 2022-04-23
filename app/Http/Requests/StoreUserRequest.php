@@ -16,6 +16,11 @@ class StoreUserRequest extends FormRequest
         return $this->user()->hasRole('admin');
     }
 
+    protected function passedValidation()
+    {
+    $this->merge(['password'=>bcrypt($this->password)]);
+    }
+
     /**
      * Get the validation rules that apply to the request.
      *
